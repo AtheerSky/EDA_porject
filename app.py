@@ -362,7 +362,7 @@ elif section == "⚙️ Feature Engineering":
     st.subheader("Asian Restaurant Feature")
 
     st.dataframe(
-        df[["categories", "Asian"]].head(10),
+        df[df["Asian"] == True][["categories", "Asian"]].head(10),
         use_container_width=True
     )
 
@@ -370,6 +370,7 @@ elif section == "⚙️ Feature Engineering":
     
     st.dataframe(
         df[["price", "price_numeric"]]
+        .dropna()
         .drop_duplicates()
         .sort_values("price_numeric")
     )
