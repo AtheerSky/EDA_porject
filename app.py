@@ -57,7 +57,6 @@ def load_data():
     df["Asian"] = df["categories"].apply(
         lambda x: any(cat in str(x) for cat in asian_categories)
     )
-    return df, asian_categories
 
     df["price_numeric"] = df["price"].map({
         "$": 1,
@@ -65,7 +64,7 @@ def load_data():
         "$$$": 3,
         "$$$$": 4
     })
-
+    return df, asian_categories
 df, ASIAN_CATS = load_data()
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
