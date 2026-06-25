@@ -57,13 +57,14 @@ def load_data():
     df["Asian"] = df["categories"].apply(
         lambda x: any(cat in str(x) for cat in asian_categories)
     )
-    # Feature Engineering
-   df["price_numeric"] = df["price"].map({
-       "Cheap": 1,
-       "Moderate": 2,
-      "Expensive": 3,
-      "Very Expensive": 4
-   })
+    
+    df["price_numeric"] = df["price"].map({
+        "Cheap": 1,
+        "Moderate": 2,
+        "Expensive": 3,
+        "Very Expensive": 4
+    })
+    
     return df, asian_categories
 df, ASIAN_CATS = load_data()
 
