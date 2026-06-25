@@ -57,17 +57,16 @@ def load_data():
     df["Asian"] = df["categories"].apply(
         lambda x: any(cat in str(x) for cat in asian_categories)
     )
-
-    df["price_numeric"] = df["price"].map({
-        "$": 1,
-        "$$": 2,
-        "$$$": 3,
-        "$$$$": 4
-    })
+    # Feature Engineering
+   df["price_numeric"] = df["price"].map({
+       "Cheap": 1,
+       "Moderate": 2,
+      "Expensive": 3,
+      "Very Expensive": 4
+   })
     return df, asian_categories
 df, ASIAN_CATS = load_data()
-st.write("Price column values:")
-st.write(df["price"].value_counts())
+
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.image(
@@ -367,10 +366,11 @@ elif section == "⚙️ Feature Engineering":
     )
 
     st.subheader("Price Numeric Feature")
-
+    
     st.dataframe(
-        df[["price", "price_numeric"]].dropna().head(10),
-        use_container_width=True
+        df[["price", "price_numeric"]]
+        .drop_duplicates()
+        .sort_values("price_numeric")
     )
 
     st.success(
