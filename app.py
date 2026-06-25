@@ -66,6 +66,8 @@ def load_data():
     })
     return df, asian_categories
 df, ASIAN_CATS = load_data()
+st.write("Price column values:")
+st.write(df["price"].value_counts())
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.image(
