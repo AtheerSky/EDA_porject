@@ -43,22 +43,31 @@ def load_data():
     # --- same cleaning steps as the notebook ---
     df = df_raw.copy()
     df = df.drop_duplicates()
+
     df["likes"] = df["likes"].fillna(0)
+
     if "ratingSignals" in df.columns:
         df = df.drop(columns=["ratingSignals"])
 
     # Asian flag
     asian_categories = [
-        "Japanese Restaurant", "Chinese Restaurant", "Korean Restaurant",
-        "Thai Restaurant", "Indian Restaurant", "Vietnamese Restaurant",
-        "Asian Restaurant", "Sushi Restaurant", "Ramen Restaurant",
+        "Japanese Restaurant",
+        "Chinese Restaurant",
+        "Korean Restaurant",
+        "Thai Restaurant",
+        "Indian Restaurant",
+        "Vietnamese Restaurant",
+        "Asian Restaurant",
+        "Sushi Restaurant",
+        "Ramen Restaurant",
         "Dim Sum Restaurant",
     ]
+
     df["Asian"] = df["categories"].apply(
         lambda x: any(cat in str(x) for cat in asian_categories)
     )
-    return df, asian_categories
 
+    # Feature Engineering
     df["price_numeric"] = df["price"].map({
         "$": 1,
         "$$": 2,
@@ -66,8 +75,7 @@ def load_data():
         "$$$$": 4
     })
 
-df, ASIAN_CATS = load_data()
-
+    return df, asian_categories
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.image(
     "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/320px-Flag_of_Saudi_Arabia.svg.png",
